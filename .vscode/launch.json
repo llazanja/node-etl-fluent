@@ -11,7 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/built/examples/ETLSQLToSQLDemo.js",
+            "args": ["/home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSQLToSQL"],
+            "program": "${workspaceFolder}/built/ETLExecutor.js",
             "outFiles": [
                 "${workspaceFolder}/built/**/*.js"
             ],

@@ -11,4 +11,6 @@ export default interface ISQLDriver extends IDriver {
     showTables(query: string): Promise<string[]>;
     createDateDimensionTable(table: string, dateFrom: Date, dateTo: Date): Promise<any[]>;
     createTimeDimensionTable(table: string): Promise<any[]>;
+    scdUpdate(table: string, updateQuery: string, insertQuery: string): Promise<void[]>;
+    lookupAll(table: string, searchAttribute: string, searchValue: string): Promise<object[]>;
 };

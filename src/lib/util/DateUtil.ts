@@ -12,6 +12,12 @@ export function getDate(date: Date): string {
     return `${year}-${dateNumberToString(month)}-${dateNumberToString(day)}`;
 }
 
+export function getDateDayBefore(date: Date): string {
+    date.setDate(date.getDay() - 1);
+
+    return getDate(date);
+}
+
 function dateNumberToString(num: Number): string {
     return num < 10 ? `0${num}` : `${num}`;
 }

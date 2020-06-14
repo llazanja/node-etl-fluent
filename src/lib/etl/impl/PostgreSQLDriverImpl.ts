@@ -147,4 +147,12 @@ export default class PostgreSQLDriver extends DefaultSQLQueryBuilderImpl impleme
     createTable(query: string): Promise<void> {
         return this.connectionPool.none(query);
     }
+
+    scdUpdate(table: string, updateQuery: string, insertQuery: string): Promise<void[]> {
+        throw new Error("Method not implemented.");
+    }
+    
+    lookupAll(table: string, searchAttribute: string, searchValue: string): Promise<object[]> {
+        throw new Error("Method not implemented.");
+    }
 };

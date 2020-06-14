@@ -2,7 +2,7 @@ import ISQLDriver from '../ISQLDriver';
 import { createPool, Pool } from 'mysql';
 import { Stream } from 'stream';
 import { DefaultSQLQueryBuilderImpl } from '../../query/DefaultSQLQueryBuilderImpl';
-import { getQuarter, getDate, dayOfWeekNumberToName, monthNumberToName } from '../../util/DateUtil';
+import { getQuarter, getDate, dayOfWeekNumberToName, monthNumberToName, getDateDayBefore } from '../../util/DateUtil';
 import { getSecondsAfterMidnight, getMinutesAfterMidnight, getPeriod, getTime } from '../../util/TimeUtil';
 
 export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements ISQLDriver {
@@ -177,5 +177,32 @@ export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements I
                 resolve();
             });
         });
+    }
+
+    scdUpdate(table: string, updateQuery: string, insertQuery: string): Promise<void[]> {       
+        const updatePromise: Promise<void> = new Promise((resolve, reject) => {
+            this.connectionPool.query(updateQuery, (err) => {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve();
+            });
+        });
+
+        const insertPromise: Promise<void> = new Promise((resolve, reject) => {
+            this.connectionPool.query(insertQuery, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve();
+            });
+        });
+
+        return Promise.all([updatePromise, insertPromise]);
+    }
+
+    lookupAll(table: string, searchAttribute: string, searchValue: string): Promise<object[]> {
+        throw new Error("Method not implemented.");
     }
 };

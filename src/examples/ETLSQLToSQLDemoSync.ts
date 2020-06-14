@@ -5,16 +5,15 @@ import mysqlConfig from './config/mysql.js';
 import pgsqlConfig from './config/postgres.js';
 
 import ETLTask from '../lib/ETLTask';
-import ETLExecutor from '../lib/ETLExecutor';
 
 const mySQLDriver = new MySQLDriver(mysqlConfig);
 const postgreSQLDriver = new PostgreSQLDriver(pgsqlConfig);
 
-(async function () {
-
+(async function () { 
+    mySQLDriver.createPool();
+    postgreSQLDriver.createPool();
+    
     console.time('ETL');
-
-    ETLExecutor.startup(mySQLDriver, postgreSQLDriver);
     
     mySQLDriver.createDateDimensionTable("dDate", new Date("1996-01-01"), new Date("1998-12-31")).then(() => {
         return mySQLDriver.createTable(`CREATE TABLE IF NOT EXISTS dProduct 
