@@ -5,14 +5,15 @@
   "main": "built/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -r ./built && tsc && sed -i 's/const jsonstream_1 = require(\"jsonstream\");/const jsonstream_1 = require(\"JSONStream\");/g' built/lib/ETLTask.js && cp -R src/examples/files built/examples",
-    "sqltosql": "node built/examples/ETLSQLToSQLDemo.js",
-    "sqltosqlsync": "node built/examples/ETLSQLToSQLDemoSync.js",
-    "filetofile": "node built/examples/ETLFileToFileDemo.js",
-    "csvtosql": "node built/examples/ETLCSVToSQLDemo.js",
-    "nosqltosql": "node built/examples/ETLNoSQLToSQLDemo.js"
+    "prebuild": "rm -r ./built",
+    "build": "tsc",
+    "sql-to-sql": "node built/examples/ETLSQLToSQLDemo.js",
+    "sql-to-sql-sync": "node built/examples/ETLSQLToSQLDemoSync.js",
+    "file-to-file": "node built/examples/ETLFileToFileDemo.js",
+    "csv-to-sql": "node built/examples/ETLCSVToSQLDemo.js",
+    "no-sql-tosql": "node built/examples/ETLNoSQLToSQLDemo.js"
   },
-  "author": "",
+  "author": "Luka Lazanja",
   "license": "ISC",
   "dependencies": {
     "JSONStream": "^1.3.5",

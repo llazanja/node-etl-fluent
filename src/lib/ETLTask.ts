@@ -1,7 +1,6 @@
-import ISQLDriver from "./etl/ISQLDriver";
+import ISQLDriver from "./driver/ISQLDriver";
+import INoSQLDriver from "./driver/INoSQLDriver";
 import { Stream, Transform, TransformCallback } from "stream";
-import { stringify } from 'jsonstream';
-import INoSQLDriver from "./etl/INoSQLDriver";
 import * as events from 'events';
 import * as fs from 'fs';
 import * as csv from "csv-parser";
@@ -12,14 +11,6 @@ type StringMap = {
 
 export default class ETLTask extends events.EventEmitter implements PromiseLike<Stream> {
     innerPromise: Promise<Stream>;
-    taskNumber: number;
-    taskName: string;
-
-    constructor(taskNumber: number, taskName: string) {
-        super();
-
-        this.on('finish', () => console.log(`Finished executing ETLTask number ${taskNumber} - ${taskName}`));
-    }
 
     then<TResult1 = Stream, TResult2 = never>(onfulfilled?: (value: Stream) => TResult1 | PromiseLike<TResult1>, onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>): PromiseLike<TResult1 | TResult2> {
         return this.innerPromise.then(onfulfilled, onrejected);
@@ -27,7 +18,7 @@ export default class ETLTask extends events.EventEmitter implements PromiseLike<
 
     fromSQLDatabase(driver: ISQLDriver, query: string): ETLTask {
         this.innerPromise = (async() => {
-            return await driver.executeQuery(query);
+            return await driver.getStreamByQuery(query);
         })();
 
         return this;
@@ -117,8 +108,7 @@ export default class ETLTask extends events.EventEmitter implements PromiseLike<
                 });
         
                 stream.on('error', (err) => {
-                    console.log(err.stack);
-                    reject();
+                    reject(err);
                 });
 
                 stream.on('end', () => {
@@ -126,26 +116,8 @@ export default class ETLTask extends events.EventEmitter implements PromiseLike<
                         inserts.push(driver.batchInsertQueryWithChunks(table, JSON.parse(JSON.stringify(chunkArray))));
                     }
                     Promise.all(inserts).then(() => {
-                        this.emit('finish');
                         resolve();
                     });
-                });
-            });
-        });
-    }
-
-    toStdOut(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.innerPromise.then(stream => {
-                const str = stream.pipe(stringify()).pipe(process.stdout);
-
-                str.on('error', (err) => {
-                    reject(err);
-                });
-
-                str.on('end', () => {
-                    this.emit('finish');
-                    resolve();
                 });
             });
         });

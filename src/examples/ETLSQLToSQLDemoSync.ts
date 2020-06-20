@@ -1,5 +1,5 @@
-import MySQLDriver from '../lib/etl/impl/MySQLDriverImpl';
-import PostgreSQLDriver from '../lib/etl/impl/PostgreSQLDriverImpl';
+import MySQLDriver from '../lib/driver/impl/MySQLDriverImpl';
+import PostgreSQLDriver from '../lib/driver/impl/PostgreSQLDriverImpl';
 
 import mysqlConfig from './config/mysql.js';
 import pgsqlConfig from './config/postgres.js';
@@ -62,23 +62,23 @@ const postgreSQLDriver = new PostgreSQLDriver(pgsqlConfig);
             CONSTRAINT fk_customer FOREIGN KEY (CustomerID) REFERENCES dCustomer(CustomerID),
             CONSTRAINT fk_date FOREIGN KEY (DateID) REFERENCES dDate(DateID))`);
     }).then(() => {
-        return new ETLTask(1, '<Create dProduct dimension table>')
+        return new ETLTask()
         .fromSQLDatabase(postgreSQLDriver, 'SELECT p."ProductID" AS "ProductDBID", p."ProductName", c."CategoryName" AS "ProductCategory" FROM products p INNER JOIN categories c ON p."CategoryID" = c."CategoryID"')
         .toSQLDatabase(mySQLDriver, 'dProduct');
     }).then(() => {
-        return new ETLTask(2, '<Create dEmployee dimension table>')
+        return new ETLTask()
         .fromSQLDatabase(postgreSQLDriver, 'SELECT e."EmployeeID" AS "EmployeeDBID", e."LastName" AS "EmpLastName", m."LastName" AS "MngLastName" FROM employees e LEFT JOIN employees m ON e."ReportsTo" = m."EmployeeID"')
         .toSQLDatabase(mySQLDriver, 'dEmployee');
     }).then(() => {
-        return new ETLTask(3, '<Create dSupplier dimension table>')
+        return new ETLTask()
         .fromSQLDatabase(postgreSQLDriver, 'SELECT s."SupplierID" AS "SupplierDBID", s."CompanyName", s."Country" FROM suppliers s')
         .toSQLDatabase(mySQLDriver, 'dSupplier');
     }).then(() => {
-        return new ETLTask(4, '<Create dCustomer dimension table>')
+        return new ETLTask()
         .fromSQLDatabase(postgreSQLDriver, 'SELECT c."CustomerID" AS "CustomerDBID", c."CompanyName", c."City", c."Country" FROM customers c')
         .toSQLDatabase(mySQLDriver, 'dCustomer');
     }).then(() => {
-        return new ETLTask(5, '<Create fact table>').fromSQLDatabase(postgreSQLDriver, `SELECT p."ProductID", e."EmployeeID", s."SupplierID", c."CustomerID", o."OrderDate" , SUM(od."UnitPrice" * od."Quantity" * (1 - od."Discount")) AS "TotalPrice" 
+        return new ETLTask().fromSQLDatabase(postgreSQLDriver, `SELECT p."ProductID", e."EmployeeID", s."SupplierID", c."CustomerID", o."OrderDate" , SUM(od."UnitPrice" * od."Quantity" * (1 - od."Discount")) AS "TotalPrice" 
                 FROM orders o JOIN order_details od ON o."OrderID" = od."OrderID" 
                 JOIN products p ON od."ProductID" = p."ProductID" 
                 JOIN suppliers s ON p."SupplierID" = s."SupplierID" 

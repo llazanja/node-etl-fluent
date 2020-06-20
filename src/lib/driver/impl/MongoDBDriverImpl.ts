@@ -1,6 +1,7 @@
 import INoSQLDriver from "../INoSQLDriver";
 import { MongoClient } from "mongodb";
 import { Stream } from "stream";
+import logger from "../../../Logger";
 
 export default class MongoDBDriverImpl implements INoSQLDriver {
     connectionPool: MongoClient;
@@ -11,7 +12,7 @@ export default class MongoDBDriverImpl implements INoSQLDriver {
     }
 
     async closePool(): Promise<void> {
-        console.log('Closing pool for MongoDB client');
+        logger.info('Closing pool for MongoDB client');
         await this.connectionPool.close();
     }
 
@@ -20,7 +21,7 @@ export default class MongoDBDriverImpl implements INoSQLDriver {
     }
 
     async createPool(): Promise<void> {
-        console.log('Creating pool for MongoDB client');
+        logger.info('Creating pool for MongoDB client');
         const client = new MongoClient(this.connectionURI, { useNewUrlParser: true, poolSize: 20, useUnifiedTopology: true });
         this.connectionPool = await client.connect();
     }

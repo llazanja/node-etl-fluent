@@ -11,8 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "args": ["/home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSQLToSQL"],
-            "program": "${workspaceFolder}/built/ETLExecutor.js",
+            "args": ["/home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLCopyTables", "/logs"],
+            "program": "${workspaceFolder}/built/TCFCDemo.js",
             "outFiles": [
                 "${workspaceFolder}/built/**/*.js"
             ],

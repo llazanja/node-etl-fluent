@@ -14,23 +14,36 @@ export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements I
         this.config = config;
     }
 
-    closePool(): void {
-        this.connectionPool.end((err) => {
-            if (err) {
-                return console.log(err);
-            }
+    closePool(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.connectionPool.end((err) => {
+                if (err) {
+                    reject(err);
+                }
 
-            console.log('Destroying MYSQL Pool');
+                resolve();
+            });
         });
     }
 
     createPool(): void {
-        console.log('Creating MYSQL Pool');
         this.connectionPool = createPool(this.config);
     }
 
-    executeQuery(query: string): Promise<Stream> {
+    getStreamByQuery(query: string): Promise<Stream> {
         return Promise.resolve(this.connectionPool.query(query).stream());
+    }
+
+    executeQuery(query: string): Promise<object[]> {
+        return new Promise((resolve, reject) => {
+            this.connectionPool.query(query, (err, results, fields) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve(results);
+            });
+        });
     }
 
     selectQueryWithTableAndFields(table: string, fields: string[]): string {
@@ -174,12 +187,13 @@ export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements I
                 if (err) {
                     reject(err);
                 }
+                
                 resolve();
             });
         });
     }
 
-    scdUpdate(table: string, updateQuery: string, insertQuery: string): Promise<void[]> {       
+    scdUpdate(updateQuery: string, insertQuery: string): Promise<void[]> {       
         const updatePromise: Promise<void> = new Promise((resolve, reject) => {
             this.connectionPool.query(updateQuery, (err) => {
                 if (err) {
@@ -202,7 +216,14 @@ export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements I
         return Promise.all([updatePromise, insertPromise]);
     }
 
-    lookupAll(table: string, searchAttribute: string, searchValue: string): Promise<object[]> {
-        throw new Error("Method not implemented.");
+    lookupAll(lookupQuery: string): Promise<object[]> {
+        return new Promise((resolve, reject) => {
+            this.connectionPool.query(lookupQuery, (err, results) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(results);
+            });
+        });
     }
 };

@@ -5,7 +5,5 @@ export default {
     "password": "postgres123",
     "database": "northwind",
     "schema": "public",
-    "connectionTimeoutMillis": 5000,
-    "idleTimeoutMillis": 10000,
     "max": 20
 }
