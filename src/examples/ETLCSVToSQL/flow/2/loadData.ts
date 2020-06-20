@@ -4,7 +4,7 @@ import ETLTask from '../../../../lib/ETLTask';
 
 export default function loadCSVDataToTerritory() {
     return new ETLTask()
-        .fromCSVFile(path.resolve(__dirname, '../../files/territories.csv'), 'utf-8')
+        .fromCSVFile(path.resolve(__dirname, '../../../files/territories.csv'), 'utf-8')
         .toUpperCase("TerritoryDescription")
         .renameAttributes({ "TerritoryID": "TerritoryDBID" })
         .toSQLDatabase(connections.mysql, "territory");

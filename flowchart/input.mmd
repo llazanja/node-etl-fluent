@@ -1,18 +1,8 @@
 graph LR
    1-->1BEGIN{1-BEGIN}
-   1BEGIN{1-BEGIN}-->territory.js(territory.js - createDCustomerTable)
-   territory.js(territory.js - createDCustomerTable)-->1END{1-END}
+   1BEGIN{1-BEGIN}-->characters.js(characters.js - createCharactersTable)
+   characters.js(characters.js - createCharactersTable)-->1END{1-END}
    1END{1-END}-->2
    2-->2BEGIN{2-BEGIN}
-   2BEGIN{2-BEGIN}-->loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)
-   2BEGIN{2-BEGIN}-->loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)
-   2BEGIN{2-BEGIN}-->loadDProduct.js(loadDProduct.js - loadDProductTable)
-   2BEGIN{2-BEGIN}-->loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)
-   loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)-->2END{2-END}
-   loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)-->2END{2-END}
-   loadDProduct.js(loadDProduct.js - loadDProductTable)-->2END{2-END}
-   loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)-->2END{2-END}
-   2END{2-END}-->3
-   3-->3BEGIN{3-BEGIN}
-   3BEGIN{3-BEGIN}-->cOrders.js(cOrders.js - createCOrdersTable)
-   cOrders.js(cOrders.js - createCOrdersTable)-->3END{3-END}
+   2BEGIN{2-BEGIN}-->loadData.js(loadData.js - loadCSVDataToTerritory)
+   loadData.js(loadData.js - loadCSVDataToTerritory)-->2END{2-END}
