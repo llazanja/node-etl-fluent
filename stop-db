@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo systemctl stop postgresql.service
+sudo systemctl stop mysqld.service
+sudo docker stop mongodb
+sudo docker rm mongodb
+sudo systemctl stop docker.service

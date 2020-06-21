@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo systemctl start postgresql.service
+sudo systemctl start mysqld.service
+sudo systemctl start docker.service
+sudo docker run -it -v /home/viserion/mongodata:/data/db -p 27017:27017 --name mongodb -d mongo:4.2-bionic
