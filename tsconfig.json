@@ -1,23 +1,21 @@
 {
     "compilerOptions": {
         "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": "./src",
         "lib": ["es2020"],
         "module": "CommonJS",
         "moduleResolution": "Node",
         "noImplicitAny": true,
         "outDir": "./built",
-        "paths": {
-            "*": ["*"]
-        },
         "target": "ES2019"
     },
     "include": [
         "src/**/*"
     ],
     "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
+        "node_modules"
     ]
 }
+
+
+
+

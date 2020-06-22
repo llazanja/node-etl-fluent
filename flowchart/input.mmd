@@ -1,8 +1,8 @@
 graph LR
    1-->1BEGIN{1-BEGIN}
-   1BEGIN{1-BEGIN}-->scdUpdate.js(scdUpdate.js - scdUpdate)
-   scdUpdate.js(scdUpdate.js - scdUpdate)-->1END{1-END}
+   1BEGIN{1-BEGIN}-->characters.js(characters.js - createCharactersTable)
+   characters.js(characters.js - createCharactersTable)-->1END{1-END}
    1END{1-END}-->2
    2-->2BEGIN{2-BEGIN}
-   2BEGIN{2-BEGIN}-->lookupAll.js(lookupAll.js - lookupAll)
-   lookupAll.js(lookupAll.js - lookupAll)-->2END{2-END}
+   2BEGIN{2-BEGIN}-->loadData.js(loadData.js - loadCSVDataToTerritory)
+   loadData.js(loadData.js - loadCSVDataToTerritory)-->2END{2-END}
