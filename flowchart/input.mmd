@@ -1,8 +1,10 @@
 graph LR
    1-->1BEGIN{1-BEGIN}
-   1BEGIN{1-BEGIN}-->characters.js(characters.js - createCharactersTable)
-   characters.js(characters.js - createCharactersTable)-->1END{1-END}
-   1END{1-END}-->2
-   2-->2BEGIN{2-BEGIN}
-   2BEGIN{2-BEGIN}-->loadData.js(loadData.js - loadCSVDataToTerritory)
-   loadData.js(loadData.js - loadCSVDataToTerritory)-->2END{2-END}
+   1BEGIN{1-BEGIN}-->loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)
+   1BEGIN{1-BEGIN}-->loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)
+   1BEGIN{1-BEGIN}-->loadDProduct.js(loadDProduct.js - loadDProductTable)
+   1BEGIN{1-BEGIN}-->loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)
+   loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)-->1END{1-END}
+   loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)-->1END{1-END}
+   loadDProduct.js(loadDProduct.js - loadDProductTable)-->1END{1-END}
+   loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)-->1END{1-END}

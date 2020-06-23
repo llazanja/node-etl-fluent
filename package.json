@@ -18,6 +18,7 @@
     "scd": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSCD",
     "show-flowchart": "node_modules/.bin/open-cli /home/viserion/Desktop/projects/diplomski/nodETL/flowchart/diagram.svg -- ",
     "show-flowchart-chrome": "npm run show-flowchart -- google-chrome-stable",
+    "sql-to-csv": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSQLToCSV",
     "sql-to-sql": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSQLToSQL",
     "sql-to-sql-sync": "node built/examples/ETLSQLToSQLDemoSync.js",
     "start": "node built/ETLExecutor.js",

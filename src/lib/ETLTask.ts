@@ -91,6 +91,49 @@ export default class ETLTask implements PromiseLike<Stream> {
         return this;
     }
 
+    toCSVFile(filename: string, encoding: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const output = fs.createWriteStream(filename, { encoding });
+            let wroteHeader = false;
+
+            this.innerPromise.then(stream => {                
+                stream.on('data', (chunk: object) => {
+                    if (!wroteHeader) {
+                        let header = '';
+
+                        Object.keys(chunk).forEach(key => {
+                            header = `${header}${key},`
+                        });
+
+                        header = header.substring(0, header.length - 1);
+
+                        output.write(`${header}\r\n`);
+
+                        wroteHeader = true;
+                    }
+
+                    let row = '';
+
+                    Object.values(chunk).forEach(value => {
+                        row = `${row}${value},`
+                    });
+
+                    row = row.substring(0, row.length - 1);
+
+                    output.write(`${row}\r\n`);
+                });
+        
+                stream.on('error', (err) => {
+                    reject(err);
+                });
+
+                stream.on('end', () => {
+                    resolve();
+                });
+            });
+        });
+    }
+
     toSQLDatabase(driver: ISQLDriver, table: string): Promise<void> {
         return new Promise((resolve, reject) => {
             this.innerPromise.then(stream => {                
