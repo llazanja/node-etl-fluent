@@ -1,7 +1,6 @@
 import ISQLDriver from "./driver/ISQLDriver";
 import INoSQLDriver from "./driver/INoSQLDriver";
 import { Stream, Transform, TransformCallback } from "stream";
-import * as events from 'events';
 import * as fs from 'fs';
 import * as csv from "csv-parser";
 
@@ -9,7 +8,7 @@ type StringMap = {
     [key: string]: string
 };
 
-export default class ETLTask extends events.EventEmitter implements PromiseLike<Stream> {
+export default class ETLTask implements PromiseLike<Stream> {
     innerPromise: Promise<Stream>;
 
     then<TResult1 = Stream, TResult2 = never>(onfulfilled?: (value: Stream) => TResult1 | PromiseLike<TResult1>, onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>): PromiseLike<TResult1 | TResult2> {
