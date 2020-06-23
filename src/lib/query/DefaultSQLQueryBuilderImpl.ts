@@ -34,6 +34,18 @@ export abstract class DefaultSQLQueryBuilderImpl implements ISQLQueryBuilder {
         return `${query} ${field} <= ${value}`;
     }
 
+    groupBy(query: string, attributes: string[]): string {
+        query = `${query} GROUP BY `;
+        attributes.reduce((prevQuery, currentAttr) => `${prevQuery} ${currentAttr}, `, query);
+        query.substring(0, query.length - 2);
+
+        return query;
+    }
+
+    join(query: string, srcTable: string, srcAttribute: string, destTable: string, destAttribute: string): string {
+        return `${query} JOIN ${destTable} ON ${srcTable}.${srcAttribute} = ${destTable}.${destAttribute} `;
+    }
+
     selectQueryWithTableAndFields(table: string, fields: string[]): string {
         throw new Error("Method not implemented.");
     }

@@ -7,6 +7,8 @@ export default interface ISQLQueryBuilder {
     filterGreaterThanOrEqualTo(query:string, field: string, value: number): string;
     filterLessThan(query:string, field: string, value: number): string;
     filterLessThanOrEqualTo(query:string, field: string, value: number): string;
+    groupBy(query: string, attributes: string[]): string;
+    join(query: string, srcTable: string, srcAttribute: string, destTable: string, destAttribute: string): string;
     selectQueryWithTable(table: string): string;
     selectQueryWithTableAndFields(table: string, fields: string[]): string;
     where(query: string): string;
