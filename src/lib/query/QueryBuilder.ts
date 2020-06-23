@@ -60,6 +60,18 @@ export default class QueryBuilder {
         return this;
     }
 
+    groupBy(attributes: string[]): QueryBuilder {
+        this.query = this.queryBuilder.groupBy(this.query, attributes);
+
+        return this;
+    }
+
+    join(srcTable: string, srcAttribute: string, destTable: string, destAttribute: string): QueryBuilder {
+        this.query = this.queryBuilder.join(this.query, srcTable, srcAttribute, destTable, destAttribute);
+
+        return this;
+    }
+
     selectQueryWithTable(table: string): QueryBuilder {
         this.query = this.queryBuilder.selectQueryWithTable(table);
         
