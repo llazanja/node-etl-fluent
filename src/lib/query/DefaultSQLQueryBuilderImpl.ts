@@ -43,7 +43,7 @@ export abstract class DefaultSQLQueryBuilderImpl implements ISQLQueryBuilder {
     }
 
     join(query: string, srcTable: string, srcAttribute: string, destTable: string, destAttribute: string): string {
-        return `${query} JOIN ${destTable} ON ${srcTable}.${srcAttribute} = ${destTable}.${destAttribute} `;
+        throw new Error("Method not implemented.");
     }
 
     selectQueryWithTableAndFields(table: string, fields: string[]): string {

@@ -34,6 +34,10 @@ export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements I
         return Promise.resolve(this.connectionPool.query(query).stream());
     }
 
+    join(query: string, srcTable: string, srcAttribute: string, destTable: string, destAttribute: string): string {
+        return `${query} JOIN ${destTable} ON ${srcTable}.${srcAttribute} = ${destTable}.${destAttribute} `;
+    }
+
     executeQuery(query: string): Promise<object[]> {
         return new Promise((resolve, reject) => {
             this.connectionPool.query(query, (err, results, fields) => {

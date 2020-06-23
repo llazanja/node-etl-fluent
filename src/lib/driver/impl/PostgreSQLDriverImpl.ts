@@ -68,6 +68,10 @@ export default class PostgreSQLDriver extends DefaultSQLQueryBuilderImpl impleme
     filterLessThanOrEqualTo(query: string, field: string, value: number): string {
         return `${query} "${field}" <= ${value}`;
     }
+
+    join(query: string, srcTable: string, srcAttribute: string, destTable: string, destAttribute: string): string {
+        return `${query} JOIN ${destTable} ON ${srcTable}."${srcAttribute}" = ${destTable}."${destAttribute}" `;
+    }
     
     selectQueryWithTableAndFields(table: string, fields: string[]): string {
         let query = 'SELECT';

@@ -14,6 +14,7 @@
     "postbuild": "npm run copy-files",
     "poststart": "npm run create-flowchart && npm run show-flowchart-chrome",
     "prebuild": "rm -r ./built",
+    "query-builder": "node built/examples/QueryBuilderDemo.js",
     "scd": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSCD",
     "show-flowchart": "node_modules/.bin/open-cli /home/viserion/Desktop/projects/diplomski/nodETL/flowchart/diagram.svg -- ",
     "show-flowchart-chrome": "npm run show-flowchart -- google-chrome-stable",
