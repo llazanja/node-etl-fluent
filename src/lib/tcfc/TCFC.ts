@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import JobQueue from "./JobQueue";
 import JobExecutor from "./JobExecutor";
 import { TableInfoTuple } from "./TableInfo";

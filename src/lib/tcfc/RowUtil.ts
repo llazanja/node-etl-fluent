@@ -11,7 +11,13 @@ export default class RowUtil {
             key['level0'] = 'level0'
          } else {
             for (let i = 0; i < depth; i++) {
-               key[keyNames[i].replace(/"/g, '')] = row[keyNames[i].replace(/"/g, '')];
+               let attrName = keyNames[i].replace(/"/g, '');
+               const parts = attrName.split('.');
+               if (parts.length == 2) {
+                  attrName = parts[1];
+               }
+
+               key[attrName] = row[attrName];
             }
          }
       

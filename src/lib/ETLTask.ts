@@ -8,8 +8,17 @@ type StringMap = {
     [key: string]: string
 };
 
+type Options = {
+    batchSize?: number
+};
+
 export default class ETLTask implements PromiseLike<Stream> {
     innerPromise: Promise<Stream>;
+    options: Options;
+
+    constructor(options: Options = { batchSize: 10000 }) {
+        this.options = options;
+    }
 
     then<TResult1 = Stream, TResult2 = never>(onfulfilled?: (value: Stream) => TResult1 | PromiseLike<TResult1>, onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>): PromiseLike<TResult1 | TResult2> {
         return this.innerPromise.then(onfulfilled, onrejected);
@@ -94,10 +103,14 @@ export default class ETLTask implements PromiseLike<Stream> {
     toCSVFile(filename: string, encoding: string): Promise<void> {
         return new Promise((resolve, reject) => {
             const output = fs.createWriteStream(filename, { encoding });
+
+            output.on('error', err => reject(err));
+            
             let wroteHeader = false;
 
             this.innerPromise.then(stream => {                
                 stream.on('data', (chunk: object) => {
+                    console.log('DATA ', chunk);
                     if (!wroteHeader) {
                         let header = '';
 
@@ -143,7 +156,7 @@ export default class ETLTask implements PromiseLike<Stream> {
                 stream.on('data', (chunk: object) => {
                     chunkArray.push(chunk);
 
-                    if (chunkArray.length === 10000) {
+                    if (chunkArray.length === this.options.batchSize) {
                         inserts.push(driver.batchInsertQueryWithChunks(table, JSON.parse(JSON.stringify(chunkArray))));
                         chunkArray.splice(0, chunkArray.length);
                     }

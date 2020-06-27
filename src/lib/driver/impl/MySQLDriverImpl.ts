@@ -159,6 +159,7 @@ export default class MySQLDriver extends DefaultSQLQueryBuilderImpl implements I
                 if (error) {
                     reject(error);
                 }
+                if (joinAttribute === 'Date' && results.length === 0) console.log('LOOKUP, ', joinValue)
                 resolve(results[0] ? results[0].result : null);
             });
         });

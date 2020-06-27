@@ -1,10 +1,36 @@
 graph LR
+   0-->0BEGIN{0-BEGIN}
+   0BEGIN{0-BEGIN}-->initConnections.js(initConnections.js - initializeConnections)
+   initConnections.js(initConnections.js - initializeConnections)-->0END{0-END}
+   0END{0-END}-->1
    1-->1BEGIN{1-BEGIN}
-   1BEGIN{1-BEGIN}-->loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)
-   1BEGIN{1-BEGIN}-->loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)
-   1BEGIN{1-BEGIN}-->loadDProduct.js(loadDProduct.js - loadDProductTable)
-   1BEGIN{1-BEGIN}-->loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)
-   loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)-->1END{1-END}
-   loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)-->1END{1-END}
-   loadDProduct.js(loadDProduct.js - loadDProductTable)-->1END{1-END}
-   loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)-->1END{1-END}
+   1BEGIN{1-BEGIN}-->dCustomer.js(dCustomer.js - createDCustomerTable)
+   1BEGIN{1-BEGIN}-->dDate.js(dDate.js - createDDateTable)
+   1BEGIN{1-BEGIN}-->dEmployee.js(dEmployee.js - createDEmployeeTable)
+   1BEGIN{1-BEGIN}-->dProduct.js(dProduct.js - createDProductTable)
+   1BEGIN{1-BEGIN}-->dSupplier.js(dSupplier.js - createDSupplierTable)
+   1BEGIN{1-BEGIN}-->dTime.js(dTime.js - createDTimeTable)
+   dCustomer.js(dCustomer.js - createDCustomerTable)-->1END{1-END}
+   dDate.js(dDate.js - createDDateTable)-->1END{1-END}
+   dEmployee.js(dEmployee.js - createDEmployeeTable)-->1END{1-END}
+   dProduct.js(dProduct.js - createDProductTable)-->1END{1-END}
+   dSupplier.js(dSupplier.js - createDSupplierTable)-->1END{1-END}
+   dTime.js(dTime.js - createDTimeTable)-->1END{1-END}
+   1END{1-END}-->2
+   2-->2BEGIN{2-BEGIN}
+   2BEGIN{2-BEGIN}-->loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)
+   2BEGIN{2-BEGIN}-->loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)
+   2BEGIN{2-BEGIN}-->loadDProduct.js(loadDProduct.js - loadDProductTable)
+   2BEGIN{2-BEGIN}-->loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)
+   loadDCustomer.js(loadDCustomer.js - loadDCustomerTable)-->2END{2-END}
+   loadDEmployee.js(loadDEmployee.js - loadDEmployeeTable)-->2END{2-END}
+   loadDProduct.js(loadDProduct.js - loadDProductTable)-->2END{2-END}
+   loadDSupplier.js(loadDSupplier.js - loadDSupplierTable)-->2END{2-END}
+   2END{2-END}-->3
+   3-->3BEGIN{3-BEGIN}
+   3BEGIN{3-BEGIN}-->cOrders.js(cOrders.js - createCOrdersTable)
+   cOrders.js(cOrders.js - createCOrdersTable)-->3END{3-END}
+   3END{3-END}-->4
+   4-->4BEGIN{4-BEGIN}
+   4BEGIN{4-BEGIN}-->loadCOrders.js(loadCOrders.js - loadCOrdersTable)
+   loadCOrders.js(loadCOrders.js - loadCOrdersTable)-->4END{4-END}

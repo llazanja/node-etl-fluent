@@ -1,18 +1,18 @@
 import MySQLDriver from '../../../lib/driver/impl/MySQLDriverImpl';
-import PostgreSQLDriver from '../../../lib/driver/impl/PostgreSQLDriverImpl';
+import MSSQLDriver from '../../../lib/driver/impl/MSSQLDriverImpl';
 
 import mysqlConfig from '../../config/mysql.js';
-import pgsqlConfig from '../../config/postgres.js';
+import mssqlConfig from '../../config/mssql.js';
 
 const mySQLDriver = new MySQLDriver(mysqlConfig);
-const postgreSQLDriver = new PostgreSQLDriver(pgsqlConfig);
+const msSQLDriver = new MSSQLDriver(mssqlConfig);
 
-mySQLDriver.createPool();
-postgreSQLDriver.createPool();
-
-const connections = {
+export const connections = {
     mysql: mySQLDriver,
-    postgresql: postgreSQLDriver
+    mssql: msSQLDriver
 };
 
-export default connections;
+export async function initConnections() {
+    mySQLDriver.createPool();
+    await msSQLDriver.createPool();
+}

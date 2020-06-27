@@ -5,9 +5,9 @@ export function getQuarter(date: Date): Number {
 }
 
 export function getDate(date: Date): string {
-    const month = date.getUTCMonth() + 1;
-    const day = date.getUTCDate();
-    const year = date.getUTCFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
 
     return `${year}-${dateNumberToString(month)}-${dateNumberToString(day)}`;
 }

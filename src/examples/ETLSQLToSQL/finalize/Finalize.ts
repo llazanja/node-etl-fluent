@@ -1,4 +1,4 @@
-import connections from '../global/Connections';
+import { connections } from '../global/Connections';
 
 export default function closePools() {
     const tasks: Promise<void>[] = [];

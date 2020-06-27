@@ -9,7 +9,6 @@
     "copy-files": "cp -r src/examples/files built/examples",
     "create-flowchart": "./node_modules/.bin/mmdc -i flowchart/input.mmd -o flowchart/diagram.svg",
     "csv-to-sql": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLCSVToSQL",
-    "file-to-file": "node built/examples/ETLFileToFileDemo.js",
     "nosql-to-sql": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLNoSQLToSQL",
     "postbuild": "npm run copy-files",
     "poststart": "npm run create-flowchart && npm run show-flowchart-chrome",
@@ -22,26 +21,27 @@
     "sql-to-sql": "npm run start -- /home/viserion/Desktop/projects/diplomski/nodETL/built/examples/ETLSQLToSQL",
     "sql-to-sql-sync": "node built/examples/ETLSQLToSQLDemoSync.js",
     "start": "node built/ETLExecutor.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tcfc": "node built/examples/TCFC/TCFCDemo.js"
   },
   "author": "Luka Lazanja",
   "license": "ISC",
   "dependencies": {
     "@mermaid-js/mermaid-cli": "^8.5.1-2",
     "csv-parser": "^2.3.3",
-    "lodash": "^4.17.15",
     "mermaid-cli": "^0.2.4",
     "mongodb": "^3.5.8",
+    "mssql": "^6.2.0",
     "mysql": "^2.18.1",
     "open-cli": "^6.0.1",
     "pg": "^8.2.1",
     "pg-promise": "^10.5.6",
     "pg-query-stream": "^3.1.1",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "xpath": "0.0.27"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.155",
     "@types/mongodb": "^3.5.20",
+    "@types/mssql": "^6.0.2",
     "@types/mysql": "^2.15.10",
     "@types/pg": "^7.14.3",
     "@types/pg-query-stream": "^1.0.3",
