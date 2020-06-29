@@ -2,7 +2,5 @@
 sudo systemctl stop postgresql.service
 sudo systemctl stop mysqld.service
 sudo docker stop mongodb
-sudo docker rm mongodb
 sudo docker stop sqlserver
-sudo docker rm sqlserver
 sudo systemctl stop docker.service
