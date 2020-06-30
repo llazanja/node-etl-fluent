@@ -1,8 +1,12 @@
 {
-  "name": "nodetl",
+  "name": "node-etl-fluent",
   "version": "1.0.0",
   "description": "",
   "main": "built/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sonyzach/usfm-validator.git"
+},
   "scripts": {
     "build": "tsc",
     "clear-logs": "rm logs/*",
