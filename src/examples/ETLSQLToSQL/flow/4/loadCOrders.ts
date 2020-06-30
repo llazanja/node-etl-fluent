@@ -16,10 +16,10 @@ export default function loadCOrdersTable() {
             WHERE YEAR(o.OrderDate) != '2070'
             GROUP BY p.ProductID, e.EmployeeID, s.SupplierID, c.CustomerID, o.OrderDate`
     )
-    .lookupAndReplace(connections.mysql, "dDate", "OrderDate", "DateID", "Date")
-    .lookupAndReplace(connections.mysql, "dProduct", "ProductID", "ProductID", "ProductDBID")
-    .lookupAndReplace(connections.mysql, "dEmployee", "EmployeeID", "EmployeeID", "EmployeeDBID")
-    .lookupAndReplace(connections.mysql, "dSupplier", "SupplierID", "SupplierID", "SupplierDBID")
-    .lookupAndReplace(connections.mysql, "dCustomer", "CustomerID", "CustomerID", "CustomerDBID")
-    .toSQLDatabase(connections.mysql, 'cOrders');
+    .lookupAndReplace(connections.postgresql, 'dDate', 'OrderDate', 'DateID', 'Date')
+    .lookupAndReplace(connections.postgresql, 'dProduct', 'ProductID', 'ProductID', 'ProductDBID')
+    .lookupAndReplace(connections.postgresql, 'dEmployee', 'EmployeeID', 'EmployeeID', 'EmployeeDBID')
+    .lookupAndReplace(connections.postgresql, 'dSupplier', 'SupplierID', 'SupplierID', 'SupplierDBID')
+    .lookupAndReplace(connections.postgresql, 'dCustomer', 'CustomerID', 'CustomerID', 'CustomerDBID')
+    .toSQLDatabase(connections.postgresql, 'cOrders');
 };

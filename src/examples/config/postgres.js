@@ -3,7 +3,7 @@ export default {
     "port": 5432,
     "user": "postgres",
     "password": "postgres123",
-    "database": "northwind",
+    "database": "NorthWind2015DW",
     "schema": "public",
     "max": 20
 }

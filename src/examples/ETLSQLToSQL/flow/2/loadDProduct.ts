@@ -9,5 +9,5 @@ export default function loadDProductTable() {
         FROM products p
         INNER JOIN categories c ON p.CategoryID = c.CategoryID`
     )
-    .toSQLDatabase(connections.mysql, 'dProduct');
+    .toSQLDatabase(connections.postgresql, 'dProduct');
 };

@@ -16,7 +16,7 @@ export default class ETLTask implements PromiseLike<Stream> {
     innerPromise: Promise<Stream>;
     options: Options;
 
-    constructor(options: Options = { batchSize: 10000 }) {
+    constructor(options: Options = { batchSize: 50000 }) {
         this.options = options;
     }
 
@@ -88,7 +88,7 @@ export default class ETLTask implements PromiseLike<Stream> {
         return this;
     }
 
-    lookupAndReplace(driver: ISQLDriver, table: string, attributeToReplace: string, attributeToLookup: string, joinAttribute: string) {
+    lookupAndReplace(driver: ISQLDriver, table: string, attributeToReplace: string, attributeToLookup: string, joinAttribute: string): ETLTask {
         this.pipeTransformStream(async (row, output, callback) => {
             if (attributeToReplace in row) {
                 row[attributeToLookup] = await driver.lookupAttribute(table, attributeToLookup, joinAttribute, row[attributeToReplace]);

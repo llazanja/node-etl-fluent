@@ -2,5 +2,5 @@
 sudo systemctl start postgresql.service
 sudo systemctl start mysqld.service
 sudo systemctl start docker.service
-sudo docker run -it -v /home/viserion/mongodata:/data/db -p 27017:27017 --name mongodb -d mongo:4.2-bionic
-sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SQLserver123" -v /home/viserion/sqlserverdata:/home/northwind -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server:2017-latest
+sudo docker start mongodb
+sudo docker start sqlserver

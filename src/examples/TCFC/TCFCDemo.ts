@@ -1,16 +1,16 @@
-import MySQLDriver from '../../lib/driver/impl/MySQLDriverImpl';
+import PostgreSQLDriver from '../../lib/driver/impl/PostgreSQLDriverImpl';
 import MSSQLDriver from '../../lib/driver/impl/MSSQLDriverImpl';
 
-import mysqlConfig from '../config/mysql.js';
+import postgresqlConfig from '../config/postgres.js';
 import mssqlConfig from '../config/mssql.js';
 
 import { TableInfo, TableInfoTuple } from '../../lib/tcfc/TableInfo';
 import { tcfc } from '../../lib/tcfc/TCFC';
 
 async function exampleTCFC() {
-    const mySQLDriver = new MySQLDriver(mysqlConfig);
+    const postgreSQLDriver = new PostgreSQLDriver(postgresqlConfig);
     const msSQLDriver = new MSSQLDriver(mssqlConfig);
-
+    console.time('TCFC');
     const srcOrdersTableInfo = new TableInfo(
         msSQLDriver,
         'orders_order_details',
@@ -19,11 +19,14 @@ async function exampleTCFC() {
         'RecordCount'
     );
     const destOrdersTableInfo = new TableInfo(
-        mySQLDriver,
+        postgreSQLDriver,
         'cOrders',
-        'FROM cOrders JOIN dCustomer ON cOrders.CustomerID = dCustomer.CustomerID',
-        ['ProductID', 'EmployeeID', 'CustomerDBID'],
-        'RecordCount'
+        `FROM "cOrders" 
+            JOIN "dCustomer" ON "cOrders"."CustomerID" = "dCustomer"."CustomerID"
+            JOIN "dProduct" ON "cOrders"."ProductID" = "dProduct"."ProductID"
+            JOIN "dEmployee" ON "cOrders"."EmployeeID" = "dEmployee"."EmployeeID"`,
+        ['"ProductDBID"', '"EmployeeDBID"', '"CustomerDBID"'],
+        '"RecordCount"'
     );
     const srcCustomerTableInfo = new TableInfo(
         msSQLDriver,
@@ -33,14 +36,14 @@ async function exampleTCFC() {
         'RecordCount'
     );
     const destCustomerTableInfo = new TableInfo(
-        mySQLDriver,
+        postgreSQLDriver,
         'dCustomer',
-        'FROM dCustomer',
-        ['CustomerDBID', 'CompanyName'],
-        'RecordCount'
+        'FROM "dCustomer"',
+        ['"CustomerDBID"', '"CompanyName"'],
+        '"RecordCount"'
     );
 
-    mySQLDriver.createPool();
+    postgreSQLDriver.createPool();
     await msSQLDriver.createPool();
 
     await tcfc(
@@ -49,11 +52,13 @@ async function exampleTCFC() {
             new TableInfoTuple(srcCustomerTableInfo, destCustomerTableInfo),
         ],
         2,
-        20000
+        50000
     );
 
-    await mySQLDriver.closePool();
+    await postgreSQLDriver.closePool();
     await msSQLDriver.closePool();
+
+    console.timeEnd('TCFC');
 };
 
 (async () => {

@@ -93,7 +93,7 @@ export default class PostgreSQLDriver extends DefaultSQLQueryBuilderImpl impleme
             throw new Error("dateTo must be larger than dateFrom!");
         }
 
-        const createTableQuery = `CREATE TABLE IF NOT EXISTS "${table}" ("DateID" SERIAL, "Type" VARCHAR(15), "Date" DATE, "Year" INT, "Quarter" INT, "Month" INT, "Day" INT, "DayOfWeek" INT, "DayOfWeekName" VARCHAR(15), "MonthName" VARCHAR(15))`;
+        const createTableQuery = `CREATE TABLE IF NOT EXISTS "${table}" ("DateID" SERIAL, "Type" VARCHAR(15), "Date" DATE, "Year" INT, "Quarter" INT, "Month" INT, "Day" INT, "DayOfWeek" INT, "DayOfWeekName" VARCHAR(15), "MonthName" VARCHAR(15), PRIMARY KEY("DateID"))`;
         await this.connectionPool.query(createTableQuery);
 
         const cs = new pgp.helpers.ColumnSet(['Type', 'Date', 'Year', 'Quarter', 'Month', 'Day', 'DayOfWeek', 'DayOfWeekName', 'MonthName'], { table });
@@ -133,7 +133,7 @@ export default class PostgreSQLDriver extends DefaultSQLQueryBuilderImpl impleme
     }
 
     async createTimeDimensionTable(table: string): Promise<any[]> { 
-        const createTableQuery = `CREATE TABLE IF NOT EXISTS "${table}" ("TimeID" SERIAL, "Type" VARCHAR(15), "Time" TIME, "SecondsAfterMidnight" INT, "MinutesAfterMidnight" INT, "Seconds" INT, "Minutes" INT, "Hour" INT, "Period" VARCHAR(15))`;
+        const createTableQuery = `CREATE TABLE IF NOT EXISTS "${table}" ("TimeID" SERIAL, "Type" VARCHAR(15), "Time" TIME, "SecondsAfterMidnight" INT, "MinutesAfterMidnight" INT, "Seconds" INT, "Minutes" INT, "Hour" INT, "Period" VARCHAR(15), PRIMARY KEY("TimeID"))`;
         await this.connectionPool.query(createTableQuery);
 
         const cs = new pgp.helpers.ColumnSet(['Type', 'Time', 'SecondsAfterMidnight', 'MinutesAfterMidnight', 'Seconds', 'Minutes', 'Hour', 'Period'], { table });
@@ -172,9 +172,11 @@ export default class PostgreSQLDriver extends DefaultSQLQueryBuilderImpl impleme
     }
 
     async lookupAttribute(table: string, attributeToLookup: string, joinAttribute: string, joinValue: string): Promise<string> {
-        const query = new pgp.ParameterizedQuery({ text: `SELECT ${attributeToLookup} AS result FROM ${table} WHERE ${joinAttribute} = $1`, values: [joinValue]})
+        const query = new pgp.ParameterizedQuery({ text: `SELECT "${attributeToLookup}" AS result FROM "${table}" WHERE "${joinAttribute}" = $1`, values: [joinValue]})
 
-        return this.connectionPool.one(query);
+        const response: { result: any } = await this.connectionPool.one(query);
+
+        return response.result;
     }
 
     batchInsertQueryWithChunks(table: string, chunkArray: object[]): Promise<void> {
